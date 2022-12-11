@@ -9,8 +9,10 @@ import pandas as pd
 import numpy as np
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+
+# don't need while used streamlit
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+# templates = Jinja2Templates(directory="templates")
 
 pkl_filename = "Multi_RegressionModel.pkl"
 with open(pkl_filename, 'rb') as file1:
@@ -50,8 +52,9 @@ class Data(BaseModel):
 
 @app.get("/")
 async def root(request: Request):
-    return templates.TemplateResponse("index.html",
-                                      {"request": request})
+    return "Hello world!!!"
+    # return templates.TemplateResponse("index.html",
+    #                                   {"request": request})
 
 
 @app.post("/predict")

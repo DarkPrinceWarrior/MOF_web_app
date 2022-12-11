@@ -1,0 +1,65 @@
+li a {
+    color: brown;
+}
+
+footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+/*navbar background color*/
+.bg-primary {
+    background-color: #000000!important;
+}
+
+/*navbar Главная color*/
+.navbar-dark .navbar-brand {
+    color: #fff;
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+/*navbar остальные ссылки color*/
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+p {
+    margin-top: 0;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.button_upload{
+    margin-left: 1rem;
+}
+
+.label_bots_select_list {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    margin-left: 1rem;
+}
+
+/*form for bots page where select */
+select_bots {
+    word-wrap: normal;
+    margin-left: 1rem;
+}

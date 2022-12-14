@@ -1,8 +1,29 @@
+import base64
+
 import streamlit
 from streamlit_option_menu import option_menu
 import requests
 import pandas as pd
 import numpy as np
+
+
+@streamlit.experimental_memo
+def get_img_as_base64(file):
+    with open(file, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+
+img = get_img_as_base64("../images/background.jpg")
+
+page_back = f"""
+<style>
+[data-testid="stAppViewContainer"]{{ background-image: url("data:image/png;base64,{img}");
+# background-image: url("../images/background.jpg");
+background-size: cover;
+}}
+</style>
+"""
 
 
 def main_action():
@@ -32,7 +53,7 @@ def main_action():
         "Wme_cm3_gr": Wme_cm3_gr
     }
     if streamlit.button("Предсказать"):
-        response = requests.post("http://127.0.0.1:5000/predict", json=data)
+        response = requests.post("http://127.0.0.1:8000/predict", json=data)
         prediction_table = response.json()
         print()
         # print(prediction_table)
@@ -56,10 +77,11 @@ def project_action():
                        "Наполнение баз данных, их масштабирование и вовлечение новых участников в их разработку\n"
                        "Разработка алгоритмов прогнозирования на основе методов машинного обучения с использованием "
                        "сгенерированных баз данных\n "
-                       "Разработка прогностических моделей проявления сенсорных свойств MOК на основе численных методов "
+                       "Разработка прогностических моделей проявления сенсорных свойств MOК на основе численных "
+                       "методов "
                        "молекулярной динамики и квантово-химических методов\n "
                        "Синтез и функционализация MOК с заданными свойствами для задач point-of-care молекулярной "
-                       "диагностики \n",unsafe_allow_html=False)
+                       "диагностики \n", unsafe_allow_html=False)
 
 
 def contact_action():
@@ -67,26 +89,38 @@ def contact_action():
     streamlit.image("../images/contact_image.jpg")
 
 
+def plots_action():
+    streamlit.title("Анимация свойств полученных МОК")
+
+
 def run():
+    streamlit.markdown(page_back, unsafe_allow_html=True)
     selected = option_menu(
         menu_title="Лаборатория сорбционных методов "
                    "молекулярной диагностики",
-        options=["Главная", "Наш проект", "Контакты", "База данных"],
-        icons=["house", "list task", "person lines fill", "clipboard data fill"],
-        menu_icon="list",
+        options=["Наш проект", "Получить МОК", "Контакты", "База данных",
+                 "Интерактив по МОК"],
+        icons=["house", "box fill", "person lines fill",
+               "clipboard data fill", "bar-chart-line-fill"],
+        menu_icon="kanban fill",
         default_index=0,
-        orientation="horizontal"
-    )
+        orientation="horizontal",
+        styles="""
+        
+        """
 
-    if selected == "Главная":
-        main_action()
+    )
 
     if selected == "Наш проект":
         project_action()
+    if selected == "Получить МОК":
+        main_action()
     if selected == "Контакты":
         contact_action()
     if selected == "База данных":
         excel_action()
+    if selected == "Интерактив по МОК":
+        plots_action()
 
 
 if __name__ == '__main__':

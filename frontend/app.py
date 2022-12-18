@@ -4,6 +4,7 @@ import streamlit
 from streamlit_option_menu import option_menu
 import requests
 import pandas as pd
+from awesome_table import AwesomeTable
 
 from components.page_contact import contact_action
 from components.page_database import excel_action
@@ -84,12 +85,11 @@ def predict_action():
     if streamlit.button("Предсказать"):
         response = requests.post("http://127.0.0.1:8000/predict", json=data)
         prediction_table = response.json()
-        streamlit.title("Предполагаемые свойства МОК:")
+        streamlit.title("Сгенерированные ИИ параметры синтеза МОК:")
         streamlit.table(pd.DataFrame(prediction_table, index=[0]))
 
 
 def run():
-
     with streamlit.sidebar:
         selected = option_menu(
             menu_title="Лаборатория сорбционных методов "

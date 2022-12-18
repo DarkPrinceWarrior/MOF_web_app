@@ -4,7 +4,20 @@ import streamlit
 from streamlit_option_menu import option_menu
 import requests
 import pandas as pd
-import numpy as np
+
+from components.page_contact import contact_action
+from components.page_database import excel_action
+from components.page_information import project_action
+from components.page_plots import plots_action
+
+streamlit.set_page_config(
+    layout="wide",
+    page_title="Adsorption project",
+    initial_sidebar_state="collapsed"
+)
+
+with open("../style.css") as css_file:
+    streamlit.markdown('<style>{}</style>'.format(css_file.read()), unsafe_allow_html=True)
 
 
 @streamlit.experimental_memo
@@ -18,16 +31,32 @@ img = get_img_as_base64("../images/background.jpg")
 
 page_back = f"""
 <style>
-[data-testid="stAppViewContainer"]{{ background-image: url("data:image/png;base64,{img}");
+
+[data-testid="stAppViewContainer"]{{
+background-image: url("data:image/png;base64,{img}");
 # background-image: url("../images/background.jpg");
 background-size: cover;
 }}
 </style>
 """
 
+streamlit.markdown(page_back, unsafe_allow_html=True)
 
-def main_action():
-    streamlit.title("Предсказание свойств МОК")
+
+def predict_action():
+    streamlit.title("Предсказание параметров синтеза МОК")
+
+    page_style = f"""
+    <style>
+    .css-7mza0f {{
+        border:3px solid white;
+        padding:10px;
+        background-color: white;
+    }}
+    </style>
+    """
+
+    streamlit.markdown(page_style, unsafe_allow_html=True)
 
     Temp_reg_C = streamlit.number_input("Tрег, ᵒС")
     W0_cm3_g = streamlit.number_input("W0, см3/г")
@@ -55,66 +84,36 @@ def main_action():
     if streamlit.button("Предсказать"):
         response = requests.post("http://127.0.0.1:8000/predict", json=data)
         prediction_table = response.json()
-        print()
-        # print(prediction_table)
         streamlit.title("Предполагаемые свойства МОК:")
         streamlit.table(pd.DataFrame(prediction_table, index=[0]))
 
 
-def excel_action():
-    streamlit.title("Excel файл базы данных параметров СЭХ для синтеза МОК")
-    df = pd.read_excel("../data_00.xlsx")
-    streamlit.write(df)
-
-
-def project_action():
-    streamlit.title("Информация по проекту")
-    streamlit.markdown("Проект лаборатории нацелен на решение проблем молекулярной диагностики и создания "
-                       "предсказательных сервисов в адсорбционных технологиях", unsafe_allow_html=False)
-    streamlit.markdown("Задачи лаборатории:\n"
-                       "Разработка требований к структуре и методам работы с реляционными базами данных, содержащими "
-                       "информацию о MOК, методах их синтеза и их адсорбционных свойствах.\n "
-                       "Наполнение баз данных, их масштабирование и вовлечение новых участников в их разработку\n"
-                       "Разработка алгоритмов прогнозирования на основе методов машинного обучения с использованием "
-                       "сгенерированных баз данных\n "
-                       "Разработка прогностических моделей проявления сенсорных свойств MOК на основе численных "
-                       "методов "
-                       "молекулярной динамики и квантово-химических методов\n "
-                       "Синтез и функционализация MOК с заданными свойствами для задач point-of-care молекулярной "
-                       "диагностики \n", unsafe_allow_html=False)
-
-
-def contact_action():
-    streamlit.title("Контакты по проекту")
-    streamlit.image("../images/contact_image.jpg")
-
-
-def plots_action():
-    streamlit.title("Анимация свойств полученных МОК")
-
-
 def run():
-    streamlit.markdown(page_back, unsafe_allow_html=True)
-    selected = option_menu(
-        menu_title="Лаборатория сорбционных методов "
-                   "молекулярной диагностики",
-        options=["Наш проект", "Получить МОК", "Контакты", "База данных",
-                 "Интерактив по МОК"],
-        icons=["house", "box fill", "person lines fill",
-               "clipboard data fill", "bar-chart-line-fill"],
-        menu_icon="kanban fill",
-        default_index=0,
-        orientation="horizontal",
-        styles="""
-        
-        """
 
-    )
+    with streamlit.sidebar:
+        selected = option_menu(
+            menu_title="Лаборатория сорбционных методов "
+                       "молекулярной диагностики",
+            options=["Наш проект", "Получить МОК", "Контакты", "База данных",
+                     "Интерактив по МОК"],
+            icons=["house", "box fill", "person lines fill",
+                   "clipboard data fill", "bar-chart-line-fill"],
+            menu_icon="kanban fill",
+            default_index=0,
+            # orientation="horizontal",
+            styles={
+                "container": {"padding": "0 % 0 % 0 % 0 %"},
+                "icon": {"color": "red", "font-size": "25px"},
+                "nav-link": {"font-size": "20px", "text-align": "start", "margin": "0px"},
+                "nav-link-selected": {"background-color": "#483D8B"},
+            }
+
+        )
 
     if selected == "Наш проект":
         project_action()
     if selected == "Получить МОК":
-        main_action()
+        predict_action()
     if selected == "Контакты":
         contact_action()
     if selected == "База данных":

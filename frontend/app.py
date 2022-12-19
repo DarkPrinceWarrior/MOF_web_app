@@ -10,6 +10,7 @@ from components.page_contact import contact_action
 from components.page_database import excel_action
 from components.page_information import project_action
 from components.page_plots import plots_action
+from components.page_mof_information import mof_inf_action
 
 streamlit.set_page_config(
     layout="wide",
@@ -92,11 +93,10 @@ def predict_action():
 def run():
     with streamlit.sidebar:
         selected = option_menu(
-            menu_title="Лаборатория сорбционных методов "
-                       "молекулярной диагностики",
-            options=["Наш проект", "Получить МОК", "Контакты", "База данных",
+            menu_title="ИИ синтез адсорбентов",
+            options=["Наш проект", "МОК информация","Получить МОК", "Контакты", "База данных",
                      "Интерактив по МОК"],
-            icons=["house", "box fill", "person lines fill",
+            icons=["house", "book", "box fill", "person lines fill",
                    "clipboard data fill", "bar-chart-line-fill"],
             menu_icon="kanban fill",
             default_index=0,
@@ -120,6 +120,8 @@ def run():
         excel_action()
     if selected == "Интерактив по МОК":
         plots_action()
+    if selected == "МОК информация":
+        mof_inf_action()
 
 
 if __name__ == '__main__':

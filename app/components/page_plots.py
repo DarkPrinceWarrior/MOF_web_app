@@ -5,8 +5,8 @@ import plotly.express as px
 
 def plots_action():
     streamlit.title("Таблица свойств полученных МОК")
-    X_test = pd.read_excel("../baseline_X_test.xlsx")
-    Y_pred = pd.read_excel("../baseline_results.xlsx")
+    X_test = pd.read_excel("./datasets/baseline_X_test.xlsx")
+    Y_pred = pd.read_excel("./datasets/baseline_results.xlsx")
     streamlit.write(Y_pred)
 
     # Plots

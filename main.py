@@ -14,11 +14,11 @@ app = FastAPI()
 # app.mount("/static", StaticFiles(directory="static"), name="static")
 # templates = Jinja2Templates(directory="templates")
 
-pkl_filename = "Multi_RegressionModel.pkl"
+pkl_filename = "app/saved_models/Multi_RegressionModel.pkl"
 with open(pkl_filename, 'rb') as file1:
     model = pickle.load(file1)
 
-pkl_filename_2 = "saved_id2cat.pkl"
+pkl_filename_2 = "app/saved_models/saved_id2cat.pkl"
 with open(pkl_filename_2, 'rb') as file2:
     id2cat = pickle.load(file2)
 

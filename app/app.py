@@ -14,11 +14,11 @@ from components.page_mof_information import mof_inf_action
 
 streamlit.set_page_config(
     layout="wide",
-    page_title="Adsorption project",
+    page_title="Adsorptech",
     initial_sidebar_state="collapsed"
 )
 
-with open("../style.css") as css_file:
+with open("static/style.css") as css_file:
     streamlit.markdown('<style>{}</style>'.format(css_file.read()), unsafe_allow_html=True)
 
 
@@ -29,7 +29,7 @@ def get_img_as_base64(file):
     return base64.b64encode(data).decode()
 
 
-img = get_img_as_base64("../images/background.jpg")
+img = get_img_as_base64("images/background.jpg")
 
 page_back = f"""
 <style>
@@ -121,8 +121,8 @@ def run():
     if selected == "Интерактив по МОК":
         plots_action()
     if selected == "МОК информация":
-        image1 = "../images/1page.jpg"
-        image2 = "../images/2page.jpg"
+        image1 = "images/1page.jpg"
+        image2 = "images/2page.jpg"
         mof_inf_action(image1, image2)
 
 

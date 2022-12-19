@@ -9,6 +9,5 @@ def contact_action():
            "А.Н.Фрумкина Российской академии наук ИФХЭ РАН <br><br>" \
            "Email: knyazeva.mk@phyche.ac.ru " \
            "<br> Web: http://sorptionlab.ru - M.M.Dubinin Laboratory of sorption processes " \
-           "https://adsorbtech.ru / - Engineering & Technical Center <br> <br>" \
-           "Перейти на сайт института: https://www.phyche.ac.ru/</div>"
+           "https://adsorbtech.ru / - Engineering & Technical Center <br> <br> </div>"
     streamlit.markdown(text, unsafe_allow_html=True)

@@ -121,7 +121,9 @@ def run():
     if selected == "Интерактив по МОК":
         plots_action()
     if selected == "МОК информация":
-        mof_inf_action()
+        image1 = "../images/1page.jpg"
+        image2 = "../images/2page.jpg"
+        mof_inf_action(image1, image2)
 
 
 if __name__ == '__main__':

@@ -139,10 +139,11 @@ def run():
     with streamlit.sidebar:
         selected = option_menu(
             menu_title="ИИ синтез адсорбентов",
-            options=["Наш проект", "МОК информация", "Получить МОК", "Контакты", "База данных",
+            options=["Наш проект", "МОК информация", "Получить МОК", "Контакты", # "База данных",
                      "Интерактив по МОК"],
             icons=["house", "book", "box fill", "person lines fill",
-                   "clipboard data fill", "bar-chart-line-fill"],
+                   #"clipboard data fill",
+                   "bar-chart-line-fill"],
             menu_icon="kanban fill",
             default_index=0,
             # orientation="horizontal",
@@ -161,8 +162,8 @@ def run():
         predict_action()
     if selected == "Контакты":
         contact_action()
-    if selected == "База данных":
-        excel_action()
+    # if selected == "База данных":
+    #     excel_action()
     if selected == "Интерактив по МОК":
         plots_action()
     if selected == "МОК информация":

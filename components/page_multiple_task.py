@@ -29,12 +29,24 @@ def task_option_action(task_images):
             encoded = base64.b64encode(image.read()).decode()
             images.append(f"data:image/jpeg;base64,{encoded}")
 
+    task_dict = {
+        0: "Адсорбция CO2",
+        1: "Адсорбция H2",
+        2: "Адсорбция CH4",
+    }
+
     clicked = clickable_images(
         images,
-        titles=[f"MOF_task #{str(i)}" for i in [1,2,3]],
+        titles=[task_dict[i] for i in range(len(task_images))],
         div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
         img_style={"margin": "5px", "height": "200px"},
     )
+    task_dict={
+        0:"Адсорбция CO2",
+        1: "Адсорбция H2",
+        2: "Адсорбция CH4",
+    }
+    streamlit.markdown(f"{task_dict[clicked]}" if clicked > -1 else "Выберите задачу")
 
     Temp_reg_C = 0
     W0_cm3_g =0
@@ -99,10 +111,11 @@ def task_option_action(task_images):
         "Sme_m2_gr": Sme_m2_gr,
         "Wme_cm3_gr": Wme_cm3_gr
     }
-    if streamlit.button("Предсказать"):
-        # response = requests.post("http://127.0.0.1:8000/predict", json=data)
-        # prediction_table = response.json()
+    if clicked in [0,1,2]:
+        if streamlit.button("Предсказать"):
+            # response = requests.post("http://127.0.0.1:8000/predict", json=data)
+            # prediction_table = response.json()
 
-        prediction_table = predict(data)
-        streamlit.title("Сгенерированные ИИ параметры синтеза МОК:")
-        streamlit.table(pd.DataFrame(prediction_table, index=[0]))
+            prediction_table = predict(data)
+            streamlit.title("Сгенерированные ИИ параметры синтеза МОК:")
+            streamlit.table(pd.DataFrame(prediction_table, index=[0]))
